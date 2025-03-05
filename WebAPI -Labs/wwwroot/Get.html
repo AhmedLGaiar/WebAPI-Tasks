@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <h1 id="h1">Bozaaa3</h1>
+    <input type="text" id="inputField" placeholder="Enter product ID" oninput="get()" />
+    <div id="div1"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function get() {
+            let productId = $("#inputField").val();
+            if (!productId) {
+                $("#div1").html("Please enter a valid product ID.");
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:3184/api/Product/${productId}`,
+                success: function (result) {
+                    if (result.success && result.data) {
+                        $("#div1").html(result.data.name + " - " + result.data.catName + " - " + result.data.price);
+                    } else {
+                        $("#div1").html("No product found.");
+                    }
+                },
+            });
+        }
+
+    </script>
+</body>
+
+</html>

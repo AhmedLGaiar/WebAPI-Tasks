@@ -1,5 +1,8 @@
-
-namespace WebAPI__Labs
+using AutoMapper;
+using Context;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+namespace WebAPI_Labs
 {
     public class Program
     {
@@ -8,8 +11,24 @@ namespace WebAPI__Labs
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+            builder.Services.AddDbContext<APIContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Gaiar", policy => {
+
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -22,6 +41,10 @@ namespace WebAPI__Labs
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("Gaiar");
+
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
