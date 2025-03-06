@@ -39,7 +39,6 @@ namespace GetData
 
             Console.WriteLine(response.data);
 
-
         }
     }
 }

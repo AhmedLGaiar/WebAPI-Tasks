@@ -12,5 +12,7 @@ public class MappingProfile : Profile
 
         CreateMap<AddProductDto, Product>();
 
+        CreateMap<RegisterDto, ApplicationUser>();
+
     }
 }
