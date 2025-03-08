@@ -21,8 +21,7 @@ namespace WebAPI_Labs.Controllers
         private readonly IMapper _mapper;
 
         public AccountController(UserManager<ApplicationUser> userManager
-                                         , IConfiguration config
-                                        , IMapper mapper)
+                                     , IConfiguration config, IMapper mapper)
         {
             this.userManager = userManager;
             this.config = config;
@@ -79,7 +78,7 @@ namespace WebAPI_Labs.Controllers
                                 claims.Add(new Claim(ClaimTypes.Role, RoleName));
                             }
                         }
-                        
+
                         string key = config["JWT:Key"];
                         var Secritkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
@@ -88,10 +87,10 @@ namespace WebAPI_Labs.Controllers
 
 
                         JwtSecurityToken mytoken = new JwtSecurityToken(
-                            issuer: config["JWT:Issuer"],  
-                            audience: config["JWT:Audience"], 
+                            issuer: config["JWT:Issuer"],
+                            audience: config["JWT:Audience"],
                             expires: DateTime.Now.AddHours(1),
-                            claims: claims,                    
+                            claims: claims,
                             signingCredentials: signingCredentials);
 
                         return Ok(new
