@@ -1,4 +1,3 @@
-using AutoMapper;
 using Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Repository;
 using System.Text;
 using WebAPI_Labs.Model;
+
 namespace WebAPI_Labs
 {
     public class Program
